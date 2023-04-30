@@ -2,9 +2,11 @@ Lib/
 Scripts/
 Include/
 __pycache__/
+instance/
+migrations/
 
 pyvenv.cfg
 requirements.txt
 TODO.md
 config.py
-.env
+chatgpt.txt

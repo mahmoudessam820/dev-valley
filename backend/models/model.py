@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
 
-# config
+
 db: SQLAlchemy = SQLAlchemy()
 bcrypt: Bcrypt = Bcrypt()
 
@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
 
     __tablename__: str = 'user'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     password_hash = db.Column(db.String(100), nullable=False)
@@ -23,7 +23,8 @@ class User(db.Model, UserMixin):
 
     articles = db.relationship('Article', backref='user', lazy=True)
 
-    def __init__(self, name, email, password_hash) -> None:
+    def __init__(self, id: int, name: str, email: str, password_hash: str) -> None:
+        self.id = id
         self.name = name
         self.email = email
         self.password_hash = password_hash
@@ -75,14 +76,15 @@ class Article(db.Model):
 
     __tablename__: str = 'article'
 
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), unllable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.Text(), nullable=False)
+    category = db.Column(db.String(100), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.datetime.now)
 
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, id, title, body, author_id) -> None:
+    def __init__(self, id: int, title: str, body: str, author_id: int) -> None:
 
         self.id = id,
         self.title = title,
@@ -96,7 +98,7 @@ class Article(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, title, body) -> None:
+    def update(self, title: str, body: str) -> None:
         self.title = title
         self.body = body
         db.session.commit()
