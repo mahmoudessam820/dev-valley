@@ -1,13 +1,17 @@
-from views.home import (home_bp)
+from views.home import home_bp
+from auth.sign_in import sign_in_bp
+from auth.log_in import login_bp
 import os
 
 from flask import Flask
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
-from models.model import db, User, Article
+from models.model import db, Users, Articles
 
-#! Instantiation Migrate
+#! Instantiation Classes
 migrate: Migrate = Migrate()
+login_manager: LoginManager = LoginManager()
 
 
 def create_app() -> Flask:
@@ -21,7 +25,12 @@ def create_app() -> Flask:
     #! Migrate Configurations
     migrate.init_app(app, db)
 
+    #! App login configurations
+    login_manager.init_app(app)
+
     app.register_blueprint(home_bp)
+    app.register_blueprint(sign_in_bp)
+    app.register_blueprint(login_bp)
 
     return app
 
