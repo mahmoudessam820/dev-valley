@@ -38,9 +38,3 @@ def create_app() -> Flask:
 # if __name__ == '__main__':
 #     app = create_app()
 #     app.run(debug=True)
-    # app.run(host='0000000', port=5000)
-    # app.run(host='0000000', port=5000, debug=True)
-    # app.run(host='0000000', port=5000, debug=True, ssl_context='adhoc')
-    # app.run(host='0000000', port=5000, debug=True, ssl_context=('cert.pem', 'key.pem'))
-    # app.run(host='0000000', port=5000, debug=True, ssl_context=('cert.pem', 'key.pem'), use_reloader=False)
-    # app.run(host='0000000', port=5000, debug=True, ssl_context=('cert.pem', 'key.pem'), use_reloader=False, threaded=True)

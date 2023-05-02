@@ -9,12 +9,29 @@ login_bp: Blueprint = Blueprint('login_bp', __name__)
 @login_bp.route('/login', methods=['POST'])
 def login() -> None:
     try:
-        pass
+
+        data = request.get_json()
+        email = data['email']
+        password = data['password']
+
+        user = Users.query.filter_by(email=email).first()
+
+        if user and user.check_password(password):
+            return jsonify({
+                'success': True,
+                'message': 'Logged in successfully'
+            }), 200
+        else:
+            return jsonify({
+                'success': False,
+                'error': 'Invalid Email or Password'
+            }), 401
+
     except KeyError:
-        # Invalid request body
+        # Invalid request
         return jsonify({
             'success': False,
-            'error': 'Invalid request body',
+            'error': 'Invalid request',
         }), 400
     except Exception as e:
         # Other errors handling

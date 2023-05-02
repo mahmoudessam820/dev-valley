@@ -32,7 +32,7 @@ class Users(db.Model, UserMixin):
         self.is_staff = is_staff
 
     def __repr__(self) -> str:
-        return f"User('{self.username}' , '{self.email}')"
+        return f"User('{self.username}' , '{self.email}', '{self.password_hash}')"
 
     @classmethod
     def create_admin(cls, username: str, email: str, password: str, is_active: bool = True) -> None:
@@ -56,7 +56,7 @@ class Users(db.Model, UserMixin):
         db.session.add(user)
         db.session.commit()
 
-    def check_password(self, password) -> bool:
+    def check_password(self, password: str) -> bool:
         return bcrypt.check_password_hash(self.password_hash, password)
 
     def update(self, username, email) -> None:
