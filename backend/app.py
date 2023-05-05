@@ -1,6 +1,7 @@
-from views.home import home_bp
+from views.feed import feed_bp
 from auth.sign_in import sign_in_bp
 from auth.log_in import login_bp
+from auth.log_out import logout_bp
 import os
 
 from flask import Flask
@@ -25,12 +26,18 @@ def create_app() -> Flask:
     #! Migrate Configurations
     migrate.init_app(app, db)
 
-    #! App login configurations
+    #! Login Manager Configurations
     login_manager.init_app(app)
+    login_manager.login_view = 'login_bp.login'
 
-    app.register_blueprint(home_bp)
+    @login_manager.user_loader
+    def load_user(user_id: str) -> None:
+        return Users.query.get(int(user_id))
+
+    app.register_blueprint(feed_bp)
     app.register_blueprint(sign_in_bp)
     app.register_blueprint(login_bp)
+    app.register_blueprint(logout_bp)
 
     return app
 

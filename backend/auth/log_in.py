@@ -1,5 +1,5 @@
 from flask import (Blueprint, request, jsonify)
-
+from flask_login import login_user
 
 from models.model import Users
 
@@ -14,9 +14,12 @@ def login() -> None:
         email = data['email']
         password = data['password']
 
-        user = Users.query.filter_by(email=email).first()
+        user: Users = Users.query.filter_by(email=email).first()
 
         if user and user.check_password(password):
+
+            login_user(user)
+
             return jsonify({
                 'success': True,
                 'message': 'Logged in successfully'
