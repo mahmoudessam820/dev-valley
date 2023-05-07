@@ -1,4 +1,4 @@
-from views.feed import feed_bp
+from routes.feed import feed_bp
 from auth.sign_in import sign_in_bp
 from auth.log_in import login_bp
 from auth.log_out import logout_bp
