@@ -2,7 +2,7 @@ import datetime
 from sqlalchemy import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from flask_login import UserMixin, login_user
+from flask_login import UserMixin
 
 
 db: SQLAlchemy = SQLAlchemy()
@@ -59,9 +59,11 @@ class Users(db.Model, UserMixin):
     def check_password(self, password: str) -> bool:
         return bcrypt.check_password_hash(self.password_hash, password)
 
-    def update(self, username, email) -> None:
-        self.username = username
-        self.email = email
+    def update(self) -> None:
+        self.username
+        self.email
+        self.password_hash = bcrypt.generate_password_hash(
+            self.password_hash).decode('utf-8')
 
         db.session.commit()
 

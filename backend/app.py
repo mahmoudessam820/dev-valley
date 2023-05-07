@@ -2,6 +2,8 @@ from views.feed import feed_bp
 from auth.sign_in import sign_in_bp
 from auth.log_in import login_bp
 from auth.log_out import logout_bp
+from auth.edit_account import edit_account_bp
+from auth.delete_account import delete_account_bp
 import os
 
 from flask import Flask
@@ -38,6 +40,8 @@ def create_app() -> Flask:
     app.register_blueprint(sign_in_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
+    app.register_blueprint(edit_account_bp)
+    app.register_blueprint(delete_account_bp)
 
     return app
 

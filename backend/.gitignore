@@ -5,6 +5,8 @@ Include/
 __pycache__/
 instance/
 migrations/
+.vscode/
+
 
 pyvenv.cfg
 requirements.txt
