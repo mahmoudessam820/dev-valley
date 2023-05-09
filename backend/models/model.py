@@ -93,10 +93,11 @@ class Articles(db.Model):
     author_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    def __init__(self, title: str, body: str, author_id: int) -> None:
+    def __init__(self, title: str, body: str, category: str, author_id: int) -> None:
 
-        self.title = title,
-        self.body = body,
+        self.title = title
+        self.body = body
+        self.category = category
         self.author_id = author_id
 
     def __repr__(self) -> str:
@@ -106,9 +107,9 @@ class Articles(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def update(self, title: str, body: str) -> None:
-        self.title = title
-        self.body = body
+    def update(self) -> None:
+        self.title
+        self.body
         db.session.commit()
 
     def delete(self) -> None:
@@ -121,6 +122,7 @@ class Articles(db.Model):
             "id": self.id,
             "title": self.title,
             "body": self.body,
+            "category": self.category,
             "date_created": self.date_created,
             "author_id": self.author_id,
         }

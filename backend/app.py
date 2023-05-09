@@ -1,16 +1,17 @@
-from routes.feed import feed_bp
 from auth.sign_in import sign_in_bp
 from auth.log_in import login_bp
 from auth.log_out import logout_bp
 from auth.edit_account import edit_account_bp
 from auth.delete_account import delete_account_bp
+from routes.feed import feed_bp
+from routes.create_article import create_article_bp
 import os
 
 from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
-from models.model import db, Users, Articles
+from models.model import db, Users
 
 #! Instantiation Classes
 migrate: Migrate = Migrate()
@@ -42,6 +43,7 @@ def create_app() -> Flask:
     app.register_blueprint(logout_bp)
     app.register_blueprint(edit_account_bp)
     app.register_blueprint(delete_account_bp)
+    app.register_blueprint(create_article_bp)
 
     return app
 
