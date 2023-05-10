@@ -3,13 +3,21 @@ from auth.log_in import login_bp
 from auth.log_out import logout_bp
 from auth.edit_account import edit_account_bp
 from auth.delete_account import delete_account_bp
+
+
 from routes.feed import feed_bp
 from routes.create_article import create_article_bp
+from routes.article_details import article_details_bp
+from routes.article_edit import article_edit_bp
+from routes.article_delete import article_delete_bp
+
+
 import os
 
 from flask import Flask
 from flask_migrate import Migrate
 from flask_login import LoginManager
+
 
 from models.model import db, Users
 
@@ -37,13 +45,17 @@ def create_app() -> Flask:
     def load_user(user_id: str) -> None:
         return Users.query.get(int(user_id))
 
-    app.register_blueprint(feed_bp)
     app.register_blueprint(sign_in_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(edit_account_bp)
     app.register_blueprint(delete_account_bp)
+
+    app.register_blueprint(feed_bp)
     app.register_blueprint(create_article_bp)
+    app.register_blueprint(article_details_bp)
+    app.register_blueprint(article_edit_bp)
+    app.register_blueprint(article_delete_bp)
 
     return app
 

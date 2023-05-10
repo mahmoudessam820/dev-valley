@@ -7,7 +7,7 @@ from models.model import Users
 edit_account_bp: Blueprint = Blueprint('edit_account_bp', __name__)
 
 
-@edit_account_bp.route('/edit/<int:user_id>', methods=['PUT'])
+@edit_account_bp.route('/user/edit/<int:user_id>', methods=['PUT'])
 def edit_account(user_id) -> None:
     try:
 
@@ -15,7 +15,7 @@ def edit_account(user_id) -> None:
 
             data = request.get_json()
             user = Users.query.get(int(user_id))
-
+            
             if user:
 
                 user.username = data['username']

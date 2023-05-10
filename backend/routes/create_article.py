@@ -3,7 +3,7 @@ from flask import (Blueprint, request, jsonify)
 from models.model import Articles
 
 
-create_article_bp = Blueprint('create_article_bp', __name__)
+create_article_bp: Blueprint = Blueprint('create_article_bp', __name__)
 
 
 @create_article_bp.route('/new', methods=['POST'])
