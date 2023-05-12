@@ -6,7 +6,7 @@ from models.model import Articles
 article_details_bp: Blueprint = Blueprint('article_details_bp', __name__)
 
 
-@article_details_bp.route('/article/<int:article_id>', methods=['GET'])
+@article_details_bp.route('/article/details/<int:article_id>', methods=['GET'])
 def get_article_details(article_id) -> None:
     try:
 

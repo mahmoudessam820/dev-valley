@@ -24,7 +24,7 @@ def create_article():
 
             return jsonify({
                 'success': True,
-                'message': 'Successfully created'
+                'message': 'Article created successfully'
             }), 201
 
     except KeyError:

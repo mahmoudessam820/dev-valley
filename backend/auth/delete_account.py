@@ -6,7 +6,7 @@ from models.model import Users
 delete_account_bp: Blueprint = Blueprint('delete_account_bp', __name__)
 
 
-@delete_account_bp.route('/delete/<int:user_id>', methods=['DELETE'])
+@delete_account_bp.route('/user/delete/<int:user_id>', methods=['DELETE'])
 def delete_account(user_id):
     try:
         if request.method == 'DELETE':

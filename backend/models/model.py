@@ -24,6 +24,7 @@ class Users(db.Model, UserMixin):
     articles = db.relationship('Articles', backref='users', lazy=True)
 
     def __init__(self, username: str, email: str, password_hash: str, is_active: bool, is_admin: bool, is_staff: bool) -> None:
+
         self.username = username
         self.email = email
         self.password_hash = password_hash
@@ -35,24 +36,24 @@ class Users(db.Model, UserMixin):
         return f"User('{self.username}' , '{self.email}', '{self.password_hash}')"
 
     @classmethod
-    def create_admin(cls, username: str, email: str, password: str, is_active: bool = True) -> None:
+    def create_admin(cls, username: str, email: str, password: str) -> None:
         """
         Creates a Admin and saves it to the database.
         """
-        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        password = bcrypt.generate_password_hash(password).decode('utf-8')
         admin = cls(username=username, email=email,
-                    password_hash=password_hash, is_admin=True, is_staff=True, is_active=is_active)
+                    password_hash=password, is_admin=True, is_staff=True, is_active=True)
         db.session.add(admin)
         db.session.commit()
 
     @classmethod
-    def create_user(cls, username: str, email: str, password: str, is_active: bool = True) -> None:
+    def create_user(cls, username: str, email: str, password: str) -> None:
         """
         Creates a new regular user and saves it to the database.
         """
-        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        password = bcrypt.generate_password_hash(password).decode('utf-8')
         user = cls(username=username, email=email,
-                   password_hash=password_hash, is_admin=False, is_staff=False, is_active=is_active)
+                   password_hash=password, is_admin=False, is_staff=False, is_active=True)
         db.session.add(user)
         db.session.commit()
 

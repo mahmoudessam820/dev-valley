@@ -13,6 +13,7 @@ def signin() -> None:
         if request.method == 'POST':
 
             data = request.get_json()
+
             username = data['username']
             email = data['email']
             password = data['password']
