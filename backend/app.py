@@ -31,7 +31,7 @@ def create_app() -> Flask:
     #! App Configurations
     app: Flask = Flask(__name__, instance_relative_config=True)
     app.config.from_object(os.environ.get(
-        'APP_SETTINGS', 'config.DevelopmentConfig'))
+        'APP_SETTINGS', 'config.TestingConfig'))
     db.init_app(app)
 
     #! Migrate Configurations

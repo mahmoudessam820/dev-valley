@@ -24,6 +24,8 @@ def signin() -> None:
 
             if not queryset:
 
+                print('Admin :) ')
+
                 # Create a new admin
                 Users.create_admin(
                     username=username, email=email, password=password)
@@ -45,6 +47,7 @@ def signin() -> None:
                     'message': 'User already exists',
                 }), 409
 
+            print('user ): ')
             # Create new regular user
             Users.create_user(
                 username=username, email=email, password=password)
