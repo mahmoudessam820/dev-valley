@@ -15,7 +15,7 @@ def edit_account(user_id) -> None:
 
             data = request.get_json()
             user = Users.query.get(int(user_id))
-            
+
             if user:
 
                 user.username = data['username']

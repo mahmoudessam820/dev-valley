@@ -1,3 +1,4 @@
+import re
 from flask import (jsonify, request, Blueprint)
 from flask_login import login_user
 
@@ -5,6 +6,14 @@ from models.model import Users
 
 
 sign_in_bp: Blueprint = Blueprint('sign_in_bp', __name__)
+
+
+def is_valid_email(email):
+    """
+    Validate email format using regex.
+    """
+    pattern = r'^\S+@\S+\.\S+$'
+    return re.match(pattern, email)
 
 
 @sign_in_bp.route('/signin', methods=['POST'])
@@ -18,13 +27,18 @@ def signin() -> None:
             email = data['email']
             password = data['password']
 
+            # Check if email is valid
+            if not is_valid_email(email):
+                return jsonify({
+                    'success': False,
+                    'error': 'Invalid email',
+                }), 400
+
             # Chech if the admin already exists
             queryset: Users = Users.query.filter_by(
                 is_admin=True, is_staff=True).first()
 
             if not queryset:
-
-                print('Admin :) ')
 
                 # Create a new admin
                 Users.create_admin(
@@ -44,10 +58,9 @@ def signin() -> None:
             if existing_user:
                 return jsonify({
                     'success': False,
-                    'message': 'User already exists',
+                    'message': 'Email already exists',
                 }), 409
 
-            print('user ): ')
             # Create new regular user
             Users.create_user(
                 username=username, email=email, password=password)
