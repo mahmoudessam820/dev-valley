@@ -1,3 +1,4 @@
+import functools
 from flask import (Blueprint, request, jsonify)
 
 from models.model import Articles
@@ -13,6 +14,14 @@ def create_article():
         if request.method == 'POST':
 
             data = request.get_json()
+
+            # Check if all required fields are present and not empty
+            required_fields = ['title', 'body', 'category', 'author']
+            if not functools.reduce(lambda x, y: x and y, map(lambda f: f in data, required_fields), True):
+                return jsonify({
+                    'success': False,
+                    'message': 'Missing or invalid required fields'
+                }), 400
 
             title = data['title']
             body = data['body']

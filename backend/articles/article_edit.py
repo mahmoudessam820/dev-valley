@@ -24,7 +24,8 @@ def edit_article(article_id):
 
                 return jsonify({
                     'success': True,
-                    'details': article.serialize()
+                    'details': article.serialize(),
+                    'message': 'Article updated successfully'
                 }), 200
             else:
                 return jsonify({

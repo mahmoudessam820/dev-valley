@@ -4,12 +4,12 @@ from models.model import Users
 def test_edit_account_exist(client, app):
 
     user = {
-        'username': 'rook',
-        'email': 'rook@gmail.com',
+        'username': 'missy',
+        'email': 'missy@gmail.com',
         'password': 'test1234'
     }
 
-    response = client.put(f'/user/edit/2', json=user)
+    response = client.put(f'/user/edit/3', json=user)
 
     assert response.status_code == 200
     assert response.json['status'] == True
@@ -17,10 +17,10 @@ def test_edit_account_exist(client, app):
 
     with app.app_context():
 
-        user = Users.query.get(2)
+        user = Users.query.get(3)
 
-        assert user.username == 'rook'
-        assert user.email == 'rook@gmail.com'
+        assert user.username == 'missy'
+        assert user.email == 'missy@gmail.com'
         assert user.check_password('test1234') == True
 
 

@@ -5,11 +5,13 @@ from auth.edit_account import edit_account_bp
 from auth.delete_account import delete_account_bp
 
 
-from routes.feed import feed_bp
-from routes.create_article import create_article_bp
-from routes.article_details import article_details_bp
-from routes.article_edit import article_edit_bp
-from routes.article_delete import article_delete_bp
+from articles.create_article import create_article_bp
+from articles.article_details import article_details_bp
+from articles.article_edit import article_edit_bp
+from articles.article_delete import article_delete_bp
+
+
+from views.feed import feed_bp
 
 
 import os
