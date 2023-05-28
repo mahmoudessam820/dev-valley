@@ -20,7 +20,12 @@ def edit_account(user_id) -> None:
 
                 user.username = data['username']
                 user.email = data['email']
-                user.password_hash = data['password']
+                user.password = data['password']
+                user.image = data['image']
+                user.website = data['website']
+                user.location = data['location']
+                user.bio = data['bio']
+                user.skills_languages = data['skills_languages']
                 user.update()
 
                 return jsonify({

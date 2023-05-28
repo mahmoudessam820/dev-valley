@@ -16,55 +16,97 @@ class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
-    password_hash = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(150), nullable=False)
+    image = db.Column(db.String(), nullable=True)
+    website = db.Column(db.String(), nullable=True)
+    location = db.Column(db.String(100), nullable=True)
+    bio = db.Column(db.Text(), nullable=True)
+    skills_languages = db.Column(db.Text(), nullable=True)
+    joined_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
     is_active = db.Column(db.Boolean, default=True)
     is_staff = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
 
-    articles = db.relationship('Articles', backref='users', lazy=True)
+    articles = db.relationship(
+        'Articles', backref='users', lazy=True, cascade='all, delete')
 
-    def __init__(self, username: str, email: str, password_hash: str, is_active: bool, is_admin: bool, is_staff: bool) -> None:
+    def __init__(self, **data: dict[str, dict]) -> None:
 
-        self.username = username
-        self.email = email
-        self.password_hash = password_hash
-        self.is_active = is_active
-        self.is_admin = is_admin
-        self.is_staff = is_staff
+        self.username: str = data.get('username')
+        self.email: str = data.get('email')
+        self.password: str = data.get('password')
+        self.image: str = data.get('image')
+        self.website: str = data.get('website')
+        self.location: str = data.get('location')
+        self.bio: str = data.get('bio')
+        self.skills_languages: str = data.get('skills_languages')
+        self.is_active: bool = data.get('is_active', True)
+        self.is_staff: bool = data.get('is_staff', False)
+        self.is_admin: bool = data.get('is_admin', False)
 
     def __repr__(self) -> str:
-        return f"User('{self.username}' , '{self.email}', '{self.password_hash}')"
+        return f"User('{self.username}' , '{self.email}', '{self.password}')"
 
     @classmethod
-    def create_admin(cls, username: str, email: str, password: str) -> None:
+    def create_admin(cls, **kwargs: dict[str, str]) -> None:
         """
         Creates a Admin and saves it to the database.
         """
-        password = bcrypt.generate_password_hash(password).decode('utf-8')
-        admin = cls(username=username, email=email,
-                    password_hash=password, is_admin=True, is_staff=True, is_active=True)
+        password = bcrypt.generate_password_hash(
+            kwargs.get('password')).decode('utf-8')
+        admin = cls(
+            username=kwargs.get('username'),
+            email=kwargs.get('email'),
+            password=password,
+            image=kwargs.get('image'),
+            website=kwargs.get('website'),
+            location=kwargs.get('location'),
+            bio=kwargs.get('bio'),
+            skills_languages=kwargs.get('skills_languages'),
+            is_admin=True,
+            is_staff=True,
+            is_active=True
+        )
         db.session.add(admin)
         db.session.commit()
 
     @classmethod
-    def create_user(cls, username: str, email: str, password: str) -> None:
+    def create_user(cls, **kwargs: dict[str, str]) -> None:
         """
         Creates a new regular user and saves it to the database.
         """
-        password = bcrypt.generate_password_hash(password).decode('utf-8')
-        user = cls(username=username, email=email,
-                   password_hash=password, is_admin=False, is_staff=False, is_active=True)
+        password = bcrypt.generate_password_hash(
+            kwargs.get('password')).decode('utf-8')
+        user = cls(
+            username=kwargs.get('username'),
+            email=kwargs.get('email'),
+            password=password,
+            image=kwargs.get('image'),
+            website=kwargs.get('website'),
+            location=kwargs.get('location'),
+            bio=kwargs.get('bio'),
+            skills_languages=kwargs.get('skills_languages'),
+            is_active=True,
+            is_staff=False,
+            is_admin=False
+        )
         db.session.add(user)
         db.session.commit()
 
     def check_password(self, password: str) -> bool:
-        return bcrypt.check_password_hash(self.password_hash, password)
+        return bcrypt.check_password_hash(self.password, password)
 
     def update(self) -> None:
         self.username
         self.email
-        self.password_hash = bcrypt.generate_password_hash(
-            self.password_hash).decode('utf-8')
+        self.password = bcrypt.generate_password_hash(
+            self.password).decode('utf-8')
+        self.image
+        self.website
+        self.location
+        self.bio
+        self.skills_languages
 
         db.session.commit()
 
@@ -78,7 +120,16 @@ class Users(db.Model, UserMixin):
             "id": self.id,
             "username": self.username,
             "email": self.email,
+            "image": self.image,
+            "website": self.website,
+            "location": self.location,
+            "bio": self.bio,
+            "skills_languages": self.skills_languages,
         }
+
+
+class Premissions:
+    pass
 
 
 class Articles(db.Model):
@@ -89,7 +140,8 @@ class Articles(db.Model):
     title = db.Column(db.String(100), nullable=False)
     body = db.Column(db.Text(), nullable=False)
     category = db.Column(db.String(100), nullable=False)
-    date_created = db.Column(db.DateTime, default=datetime.datetime.now)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
     author_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)

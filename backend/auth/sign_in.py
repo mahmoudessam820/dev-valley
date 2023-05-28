@@ -26,6 +26,11 @@ def signin() -> None:
             username = data['username']
             email = data['email']
             password = data['password']
+            image = data['image']
+            website = data['website']
+            location = data['location']
+            bio = data['bio']
+            skills_languages = data['skills_languages']
 
             # Check if email is valid
             if not is_valid_email(email):
@@ -42,7 +47,15 @@ def signin() -> None:
 
                 # Create a new admin
                 Users.create_admin(
-                    username=username, email=email, password=password)
+                    username=username,
+                    email=email,
+                    password=password,
+                    image=image,
+                    website=website,
+                    location=location,
+                    bio=bio,
+                    skills_languages=skills_languages
+                )
 
                 admin_user: Users = Users.query.first()
                 login_user(admin_user)
@@ -63,7 +76,15 @@ def signin() -> None:
 
             # Create new regular user
             Users.create_user(
-                username=username, email=email, password=password)
+                username=username,
+                email=email,
+                password=password,
+                image=image,
+                website=website,
+                location=location,
+                bio=bio,
+                skills_languages=skills_languages
+            )
 
             new_user: Users = Users.query.order_by(Users.id.desc()).first()
             login_user(new_user)
