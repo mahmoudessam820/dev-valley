@@ -17,11 +17,13 @@ def test_login_vaild_user(client, app):
 
         user = Users.query.filter_by(email='tito@gmail.com').first()
 
-        assert user.email == 'tito@gmail.com'
+        assert user.email == "tito@gmail.com"
+        assert user.is_admin == True
+        assert user.is_staff == True
         assert user.is_active == True
 
 
-def test_login_invalid_user(client, app):
+def test_login_invalid_user(client):
 
     user = {
         'email': 'test@gmail.com',

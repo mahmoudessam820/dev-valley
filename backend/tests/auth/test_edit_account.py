@@ -4,9 +4,14 @@ from models.model import Users
 def test_edit_account_exist(client, app):
 
     user = {
-        'username': 'missy',
-        'email': 'missy@gmail.com',
-        'password': 'test1234'
+        "username": "missy",
+        "email": "missy@gmail.com",
+        "password": "test1234",
+        "image": "73683",
+        "website": "https://testing.org/",
+        "location": "EU",
+        "bio": "",
+        "skills_languages": ""
     }
 
     response = client.put(f'/user/edit/3', json=user)
@@ -29,7 +34,12 @@ def test_edit_account_not_exist(client):
     user = {
         'username': 'ford',
         'email': 'ford@gmail.com',
-        'password': 'test1234'
+        'password': 'test1234',
+        "image": "73683",
+        "website": "https://testing.org/",
+        "location": "EU",
+        "bio": "",
+        "skills_languages": ""
     }
 
     response = client.put(f'/user/edit/100',  json=user)
