@@ -28,8 +28,11 @@ class Users(db.Model, UserMixin):
     is_staff = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
 
+    # Relationships
     articles = db.relationship(
         'Articles', backref='users', lazy=True, cascade='all, delete')
+    comments = db.relationship(
+        'Comments', backref='users', lazy=True, cascade='all, delete')
 
     def __init__(self, **data: dict[str, dict]) -> None:
 
@@ -137,24 +140,31 @@ class Articles(db.Model):
     __tablename__: str = 'articles'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(100), nullable=False)
+    title = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), unique=True, nullable=False)
     body = db.Column(db.Text(), nullable=False)
     category = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
 
+    # Foreign Keys
     author_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)
 
-    def __init__(self, title: str, body: str, category: str, author_id: int) -> None:
+    # Relationships
+    commetns = db.relationship(
+        'Comments', backref='articles', lazy=True, cascade='all, delete')
 
-        self.title = title
-        self.body = body
-        self.category = category
-        self.author_id = author_id
+    def __init__(self, **data: dict[str, str]) -> None:
+
+        self.title = data.get('title')
+        self.slug = data.get('slug')
+        self.body = data.get('body')
+        self.category = data.get('category')
+        self.author_id = data.get('author_id')
 
     def __repr__(self) -> str:
-        return f"Article('{self.title}', '{self.body}')"
+        return f"Article('{self.title}', '{self.slug}', '{self.body}')"
 
     def save(self) -> None:
         db.session.add(self)
@@ -162,6 +172,7 @@ class Articles(db.Model):
 
     def update(self) -> None:
         self.title
+        self.slug
         self.body
         db.session.commit()
 
@@ -174,9 +185,27 @@ class Articles(db.Model):
         return {
             "id": self.id,
             "title": self.title,
+            "slug": self.slug,
             "body": self.body,
             "category": self.category,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
             "author_id": self.author_id,
         }
+
+
+class Comments(db.Model):
+
+    __tablename__: str = 'comments'
+
+    id = db.Column(db.Integer, primary_key=True,
+                   nullable=False, autoincrement=True)
+    body = db.Column(db.Text(), nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    # Foreign Keys
+    commenter_id = db.Column(
+        db.Integer, db.ForeignKey('users.id'), nullable=False)
+    article_id = db.Column(
+        db.Integer, db.ForeignKey('articles.id'), nullable=False)
