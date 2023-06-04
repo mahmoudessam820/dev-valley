@@ -1,4 +1,4 @@
-from models.model import Users
+from app.models import Users
 
 
 def test_create_admin_user(client, app):

@@ -1,13 +1,10 @@
-from flask import Blueprint, request, jsonify
-
-from models.model import Articles
-
-
-feed_bp: Blueprint = Blueprint('feed_bp', __name__)
+from . import main
+from flask import request, jsonify
+from ..models import Articles
 
 
-@feed_bp.route('/', methods=['GET'])
-@feed_bp.route('/feed')
+@main.route('/', methods=['GET'])
+@main.route('/feed')
 def feed():
     try:
 

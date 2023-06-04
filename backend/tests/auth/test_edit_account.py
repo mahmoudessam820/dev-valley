@@ -1,4 +1,4 @@
-from models.model import Users
+from app.models import Users
 
 
 def test_edit_account_exist(client, app):
