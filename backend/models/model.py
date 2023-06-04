@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import *
+# from sqlalchemy import *
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import UserMixin

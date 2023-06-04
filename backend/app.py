@@ -23,23 +23,23 @@ from flask_login import LoginManager
 
 from models.model import db, Users
 
-#! Instantiation Classes
+# ! Instantiation Classes
 migrate: Migrate = Migrate()
 login_manager: LoginManager = LoginManager()
 
 
 def create_app() -> Flask:
 
-    #! App Configurations
+    # ! App Configurations
     app: Flask = Flask(__name__, instance_relative_config=True)
     app.config.from_object(os.environ.get(
         'APP_SETTINGS', 'config.DevelopmentConfig'))
     db.init_app(app)
 
-    #! Migrate Configurations
+    # ! Migrate Configurations
     migrate.init_app(app, db)
 
-    #! Login Manager Configurations
+    # ! Login Manager Configurations
     login_manager.init_app(app)
     login_manager.login_view = 'login_bp.login'
 
