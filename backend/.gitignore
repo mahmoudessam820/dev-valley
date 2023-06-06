@@ -10,7 +10,7 @@ migrations/
 
 
 pyvenv.cfg
-requirements.txt
 TODO.md
-config.py
 chatgpt.txt
+.env
+data-dev.sqlite

@@ -2,7 +2,7 @@
 
 ## Introduction 📰 🗞
 
-Dev-Valley is a community platform for software developers where they can share their knowledge and experiences with others through blog posts and articles.
+Dev-Valley is a community 🌱 platform for software developers where they can share their knowledge and experiences with others through blog posts and articles.
 
 It is a platform that allows developers to connect with each other and learn from one another.
 

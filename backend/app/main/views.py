@@ -1,14 +1,17 @@
+<<<<<<< HEAD:backend/views/feed.py
 from flask import Blueprint, request, jsonify
 
 
 from models.model import Articles, Users
+=======
+from . import main
+from flask import request, jsonify
+from ..models import Articles
+>>>>>>> refs/remotes/origin/main:backend/app/main/views.py
 
 
-feed_bp: Blueprint = Blueprint('feed_bp', __name__)
-
-
-@feed_bp.route('/', methods=['GET'])
-@feed_bp.route('/feed')
+@main.route('/', methods=['GET'])
+@main.route('/feed')
 def feed():
     try:
 
