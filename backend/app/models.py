@@ -1,12 +1,6 @@
 import datetime
-from sqlalchemy import *
-from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
 from flask_login import UserMixin
-
-
-db: SQLAlchemy = SQLAlchemy()
-bcrypt: Bcrypt = Bcrypt()
+from . import db, bcrypt, login_manager
 
 
 class Users(db.Model, UserMixin):
@@ -133,6 +127,11 @@ class Users(db.Model, UserMixin):
 
 class Premissions:
     pass
+
+
+@login_manager.user_loader
+def load_user(user_id: str) -> None:
+    return Users.query.get(int(user_id))
 
 
 class Articles(db.Model):

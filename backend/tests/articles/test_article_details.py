@@ -1,4 +1,4 @@
-from models.model import Articles
+from app.models import Articles
 
 
 def test_article_details(client, app):
