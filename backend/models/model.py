@@ -183,7 +183,7 @@ class Articles(db.Model):
     def serialize(self) -> dict[str]:
 
         return {
-            "id": self.id,
+            "article_id": self.id,
             "title": self.title,
             "slug": self.slug,
             "body": self.body,
@@ -209,3 +209,28 @@ class Comments(db.Model):
         db.Integer, db.ForeignKey('users.id'), nullable=False)
     article_id = db.Column(
         db.Integer, db.ForeignKey('articles.id'), nullable=False)
+
+    def __repr__(self) -> str:
+        return f"Comment('{self.commenter_id}', '{self.article_id}', '{self.body}')"
+
+    def save(self) -> None:
+        db.session.add(self)
+        db.session.commit()
+
+    def update(self) -> None:
+        self.body
+        db.session.commit()
+
+    def delete(self) -> None:
+        db.session.delete(self)
+        db.session.commit()
+
+
+    def serialize(self) -> dict[str]:
+
+        return {
+            "id": self.id,
+            "body": self.body,
+            "commenter_id": self.commenter_id,
+            "article_id": self.article_id
+        }

@@ -1,16 +1,20 @@
+# ? Users
 from auth.sign_in import sign_in_bp
 from auth.log_in import login_bp
 from auth.log_out import logout_bp
 from auth.edit_account import edit_account_bp
 from auth.delete_account import delete_account_bp
 
-
+# ? Articles
 from articles.create_article import create_article_bp
 from articles.article_details import article_details_bp
 from articles.article_edit import article_edit_bp
 from articles.article_delete import article_delete_bp
 
+# ? Comments
+from comments.create_comment import create_comment_bp
 
+# ? Feed
 from views.feed import feed_bp
 
 
@@ -47,17 +51,24 @@ def create_app() -> Flask:
     def load_user(user_id: str) -> None:
         return Users.query.get(int(user_id))
 
+    # ? Users
     app.register_blueprint(sign_in_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(logout_bp)
     app.register_blueprint(edit_account_bp)
     app.register_blueprint(delete_account_bp)
 
+    # ? Feed
     app.register_blueprint(feed_bp)
+
+    # ? Articles
     app.register_blueprint(create_article_bp)
     app.register_blueprint(article_details_bp)
     app.register_blueprint(article_edit_bp)
     app.register_blueprint(article_delete_bp)
+
+    # ? Comments
+    app.register_blueprint(create_comment_bp)
 
     return app
 

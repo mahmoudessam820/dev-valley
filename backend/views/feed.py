@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 
-from models.model import Articles
+
+from models.model import Articles, Users
 
 
 feed_bp: Blueprint = Blueprint('feed_bp', __name__)
@@ -13,8 +14,20 @@ def feed():
 
         if request.method == 'GET':
 
-            articles = Articles.query.all()
-            serialized_articles = [article.serialize() for article in articles]
+            articles = Articles.query.join(Users).add_columns(
+                Users.id, Users.username).limit(50).all()
+
+            serialized_articles = [{
+                'article_id': article.id,
+                'title': article.title,
+                'slug': article.slug,
+                'body': article.body,
+                'category': article.category,
+                'created_at': article.created_at,
+                'updated_at': article.updated_at,
+                'author_id': id,
+                'author_name': username
+            } for (article, id, username) in articles]
 
             return jsonify({
                 'success': True,
