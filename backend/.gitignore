@@ -4,7 +4,6 @@ Scripts/
 Include/
 __pycache__/
 instance/
-migrations/
 .vscode/
 .pytest_cache/
 
