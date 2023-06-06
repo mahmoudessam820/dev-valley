@@ -1,13 +1,9 @@
-<<<<<<< HEAD:backend/views/feed.py
-from flask import Blueprint, request, jsonify
-
-
-from models.model import Articles, Users
-=======
-from . import main
 from flask import request, jsonify
-from ..models import Articles
->>>>>>> refs/remotes/origin/main:backend/app/main/views.py
+
+
+
+from . import main
+from ..models import Articles, Users
 
 
 @main.route('/', methods=['GET'])
