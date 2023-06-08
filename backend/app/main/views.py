@@ -1,7 +1,6 @@
 from flask import request, jsonify
 
 
-
 from . import main
 from ..models import Articles, Users
 
@@ -10,7 +9,7 @@ from ..models import Articles, Users
 @main.route('/feed')
 def feed():
     try:
-
+        
         if request.method == 'GET':
 
             articles = Articles.query.join(Users).add_columns(

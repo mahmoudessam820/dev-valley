@@ -27,6 +27,9 @@ def create_app(config_name: str) -> Flask:
     from .articles import article as article_blueprint
     app.register_blueprint(article_blueprint)
 
+    from .comments import comment as comment_blueprint
+    app.register_blueprint(comment_blueprint)
+
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 

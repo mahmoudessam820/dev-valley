@@ -1,11 +1,13 @@
 import string
 import random
-from . import article
+from sqlalchemy.orm import aliased
 from flask import request, jsonify
 import functools
 from werkzeug.utils import secure_filename
 from slugify import slugify
-from ..models import Articles
+
+from . import article
+from ..models import Articles, Users, db, Comments
 
 
 def generate_random_string(length) -> str:
@@ -106,13 +108,42 @@ def edit_article(article_id):
 @article.route('/article/details/<int:article_id>', methods=['GET'])
 def get_article_details(article_id) -> None:
     try:
-        if request.method == 'GET':
-            article = Articles.query.get(int(article_id))
 
-            if article:
+        if request.method == 'GET':
+
+            # Define two aliases for the Users table
+            # This allows us to join the Articles and Comments tables with the Users table twice
+            author = aliased(Users)
+            commenter = aliased(Users)
+
+            # Query the database to find an article and its comments
+            article_query = db.session.query(Articles, author.username.label('author_name'), Comments.body, commenter.username.label('commenter_name'))\
+                .join(author, Articles.author_id == author.id)\
+                .join(Comments, Articles.id == Comments.article_id)\
+                .join(commenter, Comments.commenter_id == commenter.id)\
+                .filter(Articles.id == article_id)
+
+            # Get all the data from the query
+            article_data = article_query.all()
+
+            # If the article was found, create a dictionary representation of it with its comments
+            if article_data:
+
+                # Extract the article data and create a dictionary representation of it
+                article, author_name, *comments = article_data[0]
+
+                # Create a list of comment dictionaries from the query data
+                article_dict = article.serialize()
+                comments = [{'body': comment[2], 'commenter_name': comment[3]}
+                            for comment in article_data if comment[2]]
+
+                # Add the comments and author name to the article dictionary
+                article_dict['comments'] = comments
+                article_dict['author_name'] = author_name
+
                 return jsonify({
                     'success': True,
-                    'details': article.serialize()
+                    'details': article_dict
                 }), 200
             else:
                 return jsonify({
