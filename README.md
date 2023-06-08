@@ -1,4 +1,5 @@
 ## Dev Valley 👨‍💻
+
 ---
 
 ## Introduction 📰 🗞
@@ -10,6 +11,7 @@ It is a platform that allows developers to connect with each other and learn fro
 You can also create your own developer blog on Dev-Valley for free.
 
 Full stack Web project.
+
 <hr>
 
 ## Tech Stack
@@ -32,7 +34,6 @@ Our tech stack will include the following:
 - **SQLite** as our database of choice.
 - You can download and install the dependencies mentioned above using `pip`.
 
-
 ### 2. Frontend Dependencies
 
 You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com/) for our website's frontend.
@@ -42,11 +43,13 @@ You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com
 ## Development Setup(Backend)
 
 1. **Clone this repo**
+
    ```
    git clone https://github.com/mahmoudessam820/dev-valley.git
    ```
 
 2. **Move to backend folder**
+
    ```
    cd backend
    ```
@@ -59,23 +62,27 @@ You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com
    ```
 
 4. **Install the dependencies:**
+
    ```
    pip install -r requirements.txt
    ```
 
 5. **Create an .env file(for environment variables)**
+
    - Create an .env file inside backend folder and put below code inside .env file
-      ```
-      FLASK_APP=server.py
-      FLASK_DEBUG=1
-      ```
+     ```
+     FLASK_APP=server.py
+     FLASK_DEBUG=1
+     ```
 
 6. **Upgrade the database**
+
    ```
    flask db upgrade
    ```
 
 7. **Run the development server:**
+
    ```
    flask run
    ```
@@ -83,23 +90,36 @@ You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com
 8. **Verify on the Browser**<br>
    Navigate to project homepage [http://127.0.0.1:5000](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000)
 
-
 <hr>
 
 ## 🛠 Skills
 
-- HTML
-- CSS
+- HTML5
+- CSS3
 - Javascript
 - Vue.js
+- Axios
+- Jest.js
 - Bootstrap
 - Python
 - Flask
+- SQLAlchemy
+- Pytest
+- SQLite
+- PostgreSQL
+- Git & GitHub
 
 <hr>
 
 ## Author
+
 - [@mahmoudessam820](https://github.com/mahmoudessam820)
+
+<hr>
+
+## Contributors 👨‍💻
+
+- [@Kamalkoranga](https://github.com/Kamalkoranga)
 
 <hr>
 
