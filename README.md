@@ -36,7 +36,7 @@ Our tech stack will include the following:
 
 ### 2. Frontend Dependencies
 
-You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com/) for our website's frontend.
+**HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com/) for our website's frontend and [Vue](https://vuejs.org).
 
 <hr>
 
@@ -70,10 +70,11 @@ You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com
 5. **Create an .env file(for environment variables)**
 
    - Create an .env file inside backend folder and put below code inside .env file
-     ```
-     FLASK_APP=server.py
-     FLASK_DEBUG=1
-     ```
+
+      ```
+      FLASK_APP=server.py
+      FLASK_DEBUG=1
+      ```
 
 6. **Upgrade the database**
 
@@ -88,7 +89,47 @@ You must have the **HTML**, **CSS**, with [Bootstrap 5](https://getbootstrap.com
    ```
 
 8. **Verify on the Browser**<br>
+
    Navigate to project homepage [http://127.0.0.1:5000](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000)
+
+<hr>
+
+## Development Setup(Frontend)
+
+**Note:** Node version -> v18.15.0
+
+1. **Project Setup**
+
+   ```sh
+   npm install
+   ```
+
+2. **Compile and Hot-Reload for Development**
+
+   ```sh
+   npm run dev
+   ```
+
+### Other Options:
+
+
+3. **Compile and Minify for Production**
+
+   ```sh
+   npm run build
+   ```
+
+4. **Run Unit Tests with [Jest](https://jestjs.io/)**
+
+   ```sh
+   npm run test
+   ```
+
+5. **Lint with [ESLint](https://eslint.org/)**
+
+   ```sh
+   npm run lint
+   ```
 
 <hr>
 
