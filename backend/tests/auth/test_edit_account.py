@@ -2,6 +2,11 @@ from app.models import Users
 
 
 def test_edit_account_exist(client, app):
+    """
+    GIVEN a client and a user account with ID 3 that exists in the database.
+    WHEN the user submits a PUT request to edit their account information.
+    THEN the server should update the user's information in the database and return a success message.
+    """
 
     user = {
         "username": "missy",
@@ -30,6 +35,11 @@ def test_edit_account_exist(client, app):
 
 
 def test_edit_account_not_exist(client):
+    """
+    GIVEN a client and a non-existent user account ID (100).
+    WHEN the user submits a PUT request to edit their account information.
+    THEN the server should return a 404 error response with a failure message.
+    """
 
     user = {
         'username': 'ford',

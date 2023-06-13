@@ -12,9 +12,10 @@ def test_article_details(client, app):
 
         article = Articles.query.first()
 
-        assert article.title == 'learn how to build website like dev.to'
-        assert article.body == 'dev.to should be something'
-        assert article.category == 'web development'
+        assert article.title == '10 Tasks for DevOps Engineers'
+        assert article.body == 'I thought I had taken all the necessary precautions'
+        assert article.category == 'programming'
+        assert article.author_id == 2
 
 
 def test_article_not_found(client):

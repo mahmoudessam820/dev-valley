@@ -13,3 +13,4 @@ TODO.md
 chatgpt.txt
 .env
 data-dev.sqlite
+data-test.sqlite

@@ -7,8 +7,7 @@ from app import create_app, db
 @pytest.fixture()
 def app():
 
-    app = create_app()
-    app.config.from_object('config.TestingConfig')
+    app = create_app('testing')
 
     with app.app_context():
         db.create_all()

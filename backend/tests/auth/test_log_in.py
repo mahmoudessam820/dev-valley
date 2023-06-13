@@ -2,6 +2,12 @@ from app.models import Users
 
 
 def test_login_vaild_user(client, app):
+    """
+    GIVEN: A registered user with a valid email and password.
+    WHEN: The user logs in by sending a POST request to the '/login' endpoint with their email and password.
+    THEN: The server should respond with a status code of 200 and a response message of 'Logged in successfully'. 
+    Additionally, within the app context, this test queries the User model to check if the returned user has the expected properties like being an admin/staff and active.
+    """
 
     user = {
         'email': 'tito@gmail.com',
@@ -24,6 +30,11 @@ def test_login_vaild_user(client, app):
 
 
 def test_login_invalid_user(client):
+    """
+    GIVEN a client and invalid user login credentials.
+    WHEN the user attempts to log in with these credentials.
+    THEN the server should return a 401 error response with a failure message.
+    """
 
     user = {
         'email': 'test@gmail.com',

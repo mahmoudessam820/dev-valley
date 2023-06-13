@@ -2,6 +2,12 @@ from app.models import Users
 
 
 def test_create_admin_user(client, app):
+    """
+    GIVEN app and client.
+    WHEN the test_create_admin_user function is called with a dictionary of user data including a username, email, password, profile image URL, website URL, location, bio, and skills/languages.
+    THEN the function sends a POST request to the '/signin' endpoint with the user data and checks that the response status code is 201 (success), the success flag is True, and the message indicates that an admin user was created successfully. 
+    The function then gets the newly created admin user from the database using the app context and asserts that all fields match the corresponding values in the original user dictionary, as well as asserting that some boolean fields are True indicating the user's role and status.
+    """
 
     user = {
         "username": "tito",
@@ -37,6 +43,19 @@ def test_create_admin_user(client, app):
 
 
 def test_create_regular_user(client, app):
+    """
+    GIVEN a client and an app, the test_create_regular_user function tests the ability of the system to create a regular user.
+
+    WHEN a JSON object containing the user's details (such as their username, email, password, image, website, location, bio, and skills_languages) is sent to the '/signin' endpoint using a POST request.
+
+    THEN the function checks if the response status code is 201, indicating that the user was created successfully. 
+
+    It also verifies if the 'success' key in the response JSON object reads True and if the 'message' key reads 'User created successfully'.
+    THEN it checks if the user's information has been correctly stored in the database by querying the Users table using the provided email address. 
+
+    Assertions are made to ensure that the username, email, image, website, location, bio, and skills_languages match the values provided when creating the user. 
+    The function also checks if the default values for is_admin, is_active, and is_staff are False, True, and False respectively.
+    """
 
     user = {
         "username": "amr",
@@ -72,6 +91,12 @@ def test_create_regular_user(client, app):
 
 
 def test_create_user_with_valid_email(client):
+    """
+    GIVEN a client object and user data containing valid email, username, password, image, website, location, bio, and skills_language.
+    WHEN the 'test_create_user_with_valid_email' function is executed using the client's post method with the user data as json.
+    THEN it should return a response with a status code of 201 indicating the successful creation of the user. 
+    The response message should also indicate that the user was created successfully and the 'success' key in the response JSON should be True.
+    """
 
     user = {
         "username": "tony",
@@ -92,6 +117,11 @@ def test_create_user_with_valid_email(client):
 
 
 def test_create_user_with_invalid_email(client):
+    """
+    GIVEN a client instance.
+    WHEN the test_create_user_with_invalid_email function is called with an invalid email address in the user data.
+    THEN it should return a response with status code 400, and a JSON object that contains success as False and error message as 'Invalid email'.
+    """
 
     user = {
         "username": "fake",
