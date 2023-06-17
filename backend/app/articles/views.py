@@ -111,6 +111,38 @@ def get_article_details(article_id) -> None:
 
         if request.method == 'GET':
 
+            article = Articles.query\
+                .join(Users, Articles.author_id == Users.id)\
+                .filter(Articles.id == article_id)\
+                .with_entities(
+                    Articles.id,
+                    Articles.title,
+                    Articles.slug,
+                    Articles.body,
+                    Articles.category,
+                    Articles.created_at,
+                    Articles.updated_at,
+                    Articles.author_id,
+                    Users.username
+                )\
+                .first()
+
+            if article is None:
+                return jsonify({
+                    'success': False,
+                    'error': 'Article not found'
+                }), 404
+
+            comments_exist = Comments.query.filter_by(
+                article_id=article_id).first()
+
+            if comments_exist is None:
+
+                return jsonify({
+                    'success': True,
+                    'details': article._asdict()
+                }), 200
+
             # Define two aliases for the Users table
             # This allows us to join the Articles and Comments tables with the Users table twice
             author = aliased(Users)
@@ -145,11 +177,6 @@ def get_article_details(article_id) -> None:
                     'success': True,
                     'details': article_dict
                 }), 200
-            else:
-                return jsonify({
-                    'success': False,
-                    'error': 'Article not found'
-                }), 404
 
     except KeyError:
         # Invalid request

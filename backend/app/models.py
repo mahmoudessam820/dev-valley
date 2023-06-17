@@ -189,7 +189,7 @@ class Articles(db.Model):
             "category": self.category,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "author_id": self.author_id,
+            "author_id": self.author_id
         }
 
 
@@ -223,7 +223,6 @@ class Comments(db.Model):
     def delete(self) -> None:
         db.session.delete(self)
         db.session.commit()
-
 
     def serialize(self) -> dict[str]:
 
