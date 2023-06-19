@@ -58,19 +58,16 @@ def edit_comment(comment_id) -> None:
 
             data = request.get_json()
 
-            comment_id = data['comment_id']
+            comment = Comments.query.get(int(comment_id))
             body = data['body']
 
-            comment = Comments.query.get(int(comment_id))
-
             comment.body = body
-
             comment.update()
 
             return jsonify({
                 'success': True,
                 'message': 'Comment edited successfully',
-            }), 201
+            }), 200
 
     except KeyError:
         # Invalid request
@@ -99,7 +96,7 @@ def delete_comment(comment_id) -> None:
             return jsonify({
                 'success': True,
                 'message': 'Comment deleted successfully',
-            }), 201
+            }), 200
 
     except KeyError:
         # Invalid request
