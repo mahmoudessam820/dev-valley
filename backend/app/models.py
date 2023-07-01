@@ -27,6 +27,8 @@ class Users(db.Model, UserMixin):
         'Articles', backref='users', lazy=True, cascade='all, delete')
     comments = db.relationship(
         'Comments', backref='users', lazy=True, cascade='all, delete')
+    favorites = db.relationship(
+        'Favorites', backref='users', lazy=True, cascade='all, delete')
 
     def __init__(self, **data: dict[str, dict]) -> None:
 
@@ -153,14 +155,16 @@ class Articles(db.Model):
     # Relationships
     commetns = db.relationship(
         'Comments', backref='articles', lazy=True, cascade='all, delete')
+    favorites = db.relationship(
+        'Favorites', backref='articles', lazy=True, cascade='all, delete')
 
     def __init__(self, **data: dict[str, str]) -> None:
 
-        self.title = data.get('title')
-        self.slug = data.get('slug')
-        self.body = data.get('body')
-        self.category = data.get('category')
-        self.author_id = data.get('author_id')
+        self.title: str = data.get('title')
+        self.slug: str = data.get('slug')
+        self.body: str = data.get('body')
+        self.category: str = data.get('category')
+        self.author_id: str = data.get('author_id')
 
     def __repr__(self) -> str:
         return f"Article('{self.title}', '{self.slug}', '{self.body}')"
@@ -232,3 +236,18 @@ class Comments(db.Model):
             "commenter_id": self.commenter_id,
             "article_id": self.article_id
         }
+
+
+class Favorites(db.Model):
+
+    __tablename__: str = 'favorites'
+
+    id = db.Column(db.Integer, primary_key=True,
+                   autoincrement=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.now)
+
+    # Foreign Keys
+    favorited_by_id = db.Column(
+        db.Integer, db.ForeignKey('users.id'), nullable=False)
+    article_id = db.Column(db.Integer, db.ForeignKey(
+        'articles.id'), nullable=False)
