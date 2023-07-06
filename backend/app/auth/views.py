@@ -2,7 +2,7 @@ import re
 from . import auth
 from flask import request, jsonify
 from flask_login import login_user, logout_user
-from ..models import Users
+from ..models import Users, Premissions
 
 
 def is_valid_email(email):
@@ -160,6 +160,8 @@ def edit_account(user_id) -> None:
             data = request.get_json()
             user = Users.query.get(int(user_id))
 
+            permission = Premissions(user)
+
             if user:
 
                 user.username = data['username']
@@ -170,6 +172,9 @@ def edit_account(user_id) -> None:
                 user.location = data['location']
                 user.bio = data['bio']
                 user.skills_languages = data['skills_languages']
+
+                permission.demote_from_staff()
+
                 user.update()
 
                 return jsonify({

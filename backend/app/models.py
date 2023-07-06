@@ -128,7 +128,87 @@ class Users(db.Model, UserMixin):
 
 
 class Premissions:
-    pass
+
+    def __init__(self, user=None) -> None:
+        """
+        Initializes a Permissions object.
+
+        Args:
+        - user: An optional parameter representing the user. Defaults to None.
+        """
+
+        self.user = user
+
+    def is_admin(self) -> bool:
+        """
+        Checks if the user has admin privileges.
+
+        Returns:
+        - A boolean value indicating whether the user has admin privileges or not.
+        """
+
+        return self.user.is_admin if self.user else False
+
+    def is_staff(self) -> bool:
+        """
+        Checks if the user has staff privileges.
+
+        Returns:
+        - A boolean value indicating whether the user has staff privileges or not.
+        """
+
+        return self.user.is_staff if self.user else False
+
+    def has_permission(self, permission: str) -> bool:
+        """
+        Method checks if the user has a specific permission. 
+        It checks if the user is an admin or if the user is staff and the permission is one of 'create', 'update', or 'delete'.
+        """
+
+        if self.is_admin():
+            return True
+
+        elif self.is_staff() and permission in ['create', 'update', 'delete']:
+            return True
+
+        else:
+            False
+
+    def grant_admin_privileges(self) -> None:
+        """
+        Grants admin privileges to the user by setting is_admin=True and is_staff=True.
+        """
+
+        self.user.is_admin = True
+        self.user.is_staff = True
+
+        db.session.commit()
+
+    def revoke_admin_privileges(self) -> None:
+        """
+        Revokes admin privileges from the user by setting is_admin=False and is_staff=False.
+        """
+
+        self.user.is_admin = False
+        self.user.is_staff = False
+
+        db.session.commit()
+
+    def promote_to_staff(self) -> None:
+        """
+        Promotes the user to staff by setting is_staff=True.
+        """
+
+        self.user.is_staff = True
+        db.session.commit()
+
+    def demote_from_staff(self) -> None:
+        """
+        Demotes the user from staff by setting is_staff=False.
+        """
+
+        self.user.is_staff = False
+        db.session.commit()
 
 
 @login_manager.user_loader
